@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>gulp</title>
+    <title>gulp对Hexo的优化提速</title>
     <url>/archives/4cc2ef8a/</url>
     <content><![CDATA[<div class="note default">
             <h1 id="gulp对Hexo的优化提速"><a href="#gulp对Hexo的优化提速" class="headerlink" title="gulp对Hexo的优化提速"></a>gulp对Hexo的优化提速</h1><h2 id="需求工具及环境"><a href="#需求工具及环境" class="headerlink" title="需求工具及环境"></a>需求工具及环境</h2><p><strong>gulp(v4.0.2)</strong></p><p><strong>xshell</strong></p><p><strong>winscp</strong></p><p>笔者的是<strong>centos8.0</strong> ,centos系列其他系统应该也没问题</p><h2 id="为什么要提速？"><a href="#为什么要提速？" class="headerlink" title="为什么要提速？"></a>为什么要提速？</h2>
