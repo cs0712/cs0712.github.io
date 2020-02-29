@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>gulp</title>
+    <url>/archives/4cc2ef8a/</url>
+    <content><![CDATA[<div class="note default">
+            <h1 id="gulp对Hexo的优化提速"><a href="#gulp对Hexo的优化提速" class="headerlink" title="gulp对Hexo的优化提速"></a>gulp对Hexo的优化提速</h1><h2 id="需求工具及环境"><a href="#需求工具及环境" class="headerlink" title="需求工具及环境"></a>需求工具及环境</h2><p><strong>gulp(v4.0.2)</strong></p><p><strong>xshell</strong></p><p><strong>winscp</strong></p><p>笔者的是<strong>centos8.0</strong> ,centos系列其他系统应该也没问题</p><h2 id="为什么要提速？"><a href="#为什么要提速？" class="headerlink" title="为什么要提速？"></a>为什么要提速？</h2>
+          </div>
+
+<a id="more"></a>
+<p>当我们搭建好了个人博客，随着博客中内容越来越多，加载网页的速度也越来越慢，因此我们需要将博客中的内容进行压缩来减少访问网站需要加载内容的体积，从而达到加快加载速度的目的。</p>
+<h2 id="怎么提速？"><a href="#怎么提速？" class="headerlink" title="怎么提速？"></a>怎么提速？</h2><p>常用的有三种方式: hexo-neat,hexo-all-minifier,gulp</p>
+<p>其中hexo-neat和hexo-all-minifier配置起来比较简单，但是笔者的服务器一用这两个插件就会出现”Render”错误，有兴趣的朋友可以使用上述两个插件。</p>
+<p>我们来说gulp的使用</p>
+<h3 id="第一步-安装gulp和压缩模块"><a href="#第一步-安装gulp和压缩模块" class="headerlink" title="第一步: 安装gulp和压缩模块"></a>第一步: 安装gulp和压缩模块</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g gulp --save &#x2F;&#x2F;gulp全局安装</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install gulp --save &#x2F;&#x2F;gulp本地安装</span><br></pre></td></tr></table></figure>
+
+<p>需注意，不要看上述两条代码长得像，可他们的功能却完全不一样，不要漏了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install gulp-minify-css --save</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install gulp-uglify --save</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install gulp-htmlmin --save</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install gulp-htmlclean --save</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install gulp-babel --save</span><br></pre></td></tr></table></figure>
+
+<p>依次按照指令安装上述文件</p>
+<p>其实还有一条</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install gulp-imagemin --save &#x2F;&#x2F;压缩图片</span><br></pre></td></tr></table></figure>
+
+<p>但笔者输入在使用这个模块时，无论如何调试都会报错，不知道是什么原因，所以笔者将压缩图片的功能阉割掉了，有时间的朋友可以安装研究一下。</p>
+<h3 id="第二步：创建gulpfile-js"><a href="#第二步：创建gulpfile-js" class="headerlink" title="第二步：创建gulpfile.js"></a>第二步：创建gulpfile.js</h3><p>在你的<strong>博客根目录</strong>下创建一个文件，名字叫<strong>gulpfile.js</strong></p>
+<p>然后复制粘贴以下代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var gulp &#x3D; require(&#39;gulp&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;Plugins模块获取</span><br><span class="line">var minifycss &#x3D; require(&#39;gulp-minify-css&#39;);</span><br><span class="line">var uglify &#x3D; require(&#39;gulp-uglify&#39;);</span><br><span class="line">var minifyhtml &#x3D; require(&#39;gulp-minify-html&#39;);</span><br><span class="line">var babel &#x3D; require(&#39;gulp-babel&#39;);</span><br><span class="line">&#x2F;&#x2F; 压缩 public 目录 css文件</span><br><span class="line">gulp.task(&#39;minify-css&#39;, function () &#123;</span><br><span class="line">    return gulp.src(&#39;.&#x2F;public&#x2F;**&#x2F;*.css&#39;)</span><br><span class="line">        .pipe(minifycss())</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#39;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 压缩 public 目录 html文件</span><br><span class="line">gulp.task(&#39;minify-html&#39;, function () &#123;</span><br><span class="line">    return gulp.src(&#39;.&#x2F;public&#x2F;**&#x2F;*.html&#39;,)</span><br><span class="line">        .pipe(minifyhtml())</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#39;))</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 压缩 public&#x2F;js 目录 js文件，忽略&#x2F;public&#x2F;lib&#x2F;blog-encrypt.js</span><br><span class="line">gulp.task(&#39;minify-js&#39;, function (done) &#123;</span><br><span class="line">    return gulp.src([&#39;.&#x2F;public&#x2F;**&#x2F;*.js&#39;, &#39;!.&#x2F;public&#x2F;**&#x2F;*.min.js&#39;])</span><br><span class="line">        .pipe(babel(&#123;</span><br><span class="line">            &#x2F;&#x2F;将ES6代码转译为可执行的JS代码</span><br><span class="line">            presets: [&#39;es2015&#39;] &#x2F;&#x2F; es5检查机制</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(uglify())</span><br><span class="line">        .pipe(gulp.dest(&#39;.&#x2F;public&#39;));</span><br><span class="line">    done();</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 压缩图片</span><br><span class="line">&#x2F;&#x2F;gulp.task(&#39;minify-images&#39;, function() &#123;</span><br><span class="line">&#x2F;&#x2F;    return gulp.src(&#39;.&#x2F;public&#x2F;images&#x2F;**&#x2F;*.*&#39;)</span><br><span class="line">&#x2F;&#x2F;        .pipe(imagemin(</span><br><span class="line">&#x2F;&#x2F;        [imagemin.gifsicle(&#123;&#39;optimizationLevel&#39;: 3&#125;),</span><br><span class="line">&#x2F;&#x2F;        imagemin.jpegtran(&#123;&#39;progressive&#39;: true&#125;),</span><br><span class="line">&#x2F;&#x2F;        imagemin.optipng(&#123;&#39;optimizationLevel&#39;: 7&#125;),</span><br><span class="line">&#x2F;&#x2F;        imagemin.svgo()],</span><br><span class="line">&#x2F;&#x2F;        &#123;&#39;verbose&#39;: true&#125;))</span><br><span class="line">&#x2F;&#x2F;        .pipe(gulp.dest(&#39;.&#x2F;public&#x2F;images&#39;))</span><br><span class="line">&#x2F;&#x2F;&#125;);</span><br><span class="line">&#x2F;&#x2F;整了两个多小时没整好！@^@)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 分别执行css、heml、js的压缩任务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gulp.task(&#39;default&#39;, gulp.parallel(&#39;minify-css&#39;, &#39;minify-html&#39;, &#39;minify-js&#39;));</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三步-创建-babelrc文件"><a href="#第三步-创建-babelrc文件" class="headerlink" title="第三步: 创建  .babelrc文件"></a>第三步: 创建  .babelrc文件</h3><p>在站点<strong>根目录</strong>下创建 <strong>.babelrc</strong>文件</p>
+<p>复制粘贴</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#39;presets&#39;: [&#39;es2015&#39;],</span><br><span class="line">    &quot;plugins&quot;: [&quot;transform-remove-strict-mode&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步：执行压缩命令"><a href="#第四步：执行压缩命令" class="headerlink" title="第四步：执行压缩命令"></a>第四步：执行压缩命令</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo g &amp;&amp; gulp</span><br></pre></td></tr></table></figure>
+
+<h3 id="彩蛋：制作一键部署文件"><a href="#彩蛋：制作一键部署文件" class="headerlink" title="彩蛋：制作一键部署文件"></a>彩蛋：制作一键部署文件</h3><p>在站点<strong>根目录</strong>下创建<strong>deploy.sh</strong></p>
+<p>输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo cl &amp;&amp; hexo g &amp;&amp; gulp &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>每次需要部署博客只需要</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sh d &#x2F;&#x2F;按完d再按一下tab键，变成</span><br><span class="line">sh deploy.sh &#x2F;&#x2F;执行一键部署文件</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>gulp,hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo+github搭建教程</title>
     <url>/archives/a5f2cbee/</url>
     <content><![CDATA[<div class="note default">
