@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://cs0712.github.io/"/>
-  <updated>2020-02-29T13:37:05.000Z</updated>
+  <updated>2020-03-10T14:57:37.195Z</updated>
   <id>https://cs0712.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>manager</title>
+    <link href="https://cs0712.github.io/archives/fa2425b9/"/>
+    <id>https://cs0712.github.io/archives/fa2425b9/</id>
+    <published>2020-03-10T14:57:37.000Z</published>
+    <updated>2020-03-10T14:57:37.195Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note default">                      </div><a id="more"></a><hr>]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note default&quot;&gt;
+            
+          &lt;/div&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>gulp对Hexo的优化提速</title>
